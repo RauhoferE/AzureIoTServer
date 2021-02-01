@@ -1,5 +1,5 @@
 let appInsights = require('applicationinsights');
-appInsights.setup('<instrumentation_key>').start();
+appInsights.setup('bba9b38e-a166-44ad-b790-4e228695c60f').start();
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
