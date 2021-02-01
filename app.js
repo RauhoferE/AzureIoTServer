@@ -30,6 +30,12 @@ const create = async () => {
     app.get('/', (req, res) => {
         res.sendStatus(200);
     });
+    app.get('/GetHTTPDATA', (req, res) => {
+        res.sendFile(path.join(baseDir, "HTTPDATA.txt"));
+    });
+    app.get('/GetLoRaWANDATA', (req, res) => {
+        res.sendFile(path.join(baseDir, "LORAWANDATA.txt"));
+    });
 
     app.post('/PostHTTPData',jsonParser, (req,res) =>{
         var body = (req.body);
