@@ -1,6 +1,8 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
+var bodyParser = require('body-parser')
+
 
 const baseDir = __dirname;
 
@@ -17,26 +19,42 @@ const create = async () => {
 
     // server
     const app = express();
+    const jsonParser = bodyParser.json()
 
     // configure nonFeature
     //app.use(ignoreFavicon);
 
     // root route - serve static file
     app.get('/', (req, res) => {
-        res.sendFile(path.join(__dirname, '../public/client.html'));
+        res.sendStatus(200);
     });
 
-    app.post('/PostHTTPData', (req,res) =>{
-        var Data = {"Date": Date.now(), "Payloadsize": req.body.length, "Number": req.headers['Count']};
-        fs.appendFile(path.join(baseDir, "HTTPDATA.txt"), Data, (err) => {
+    app.post('/PostHTTPData',jsonParser, (req,res) =>{
+        var body = (req.body);
+        console.log(body);
+        console.log(JSON.stringify(body).length)
+        console.log(req.header('Count'))
+        var DataToWrite = {"Date": Date.now(), "Payloadsize": JSON.stringify(body).length, "Number": req.header('Count')};
+        console.log(DataToWrite)
+        fs.appendFile(path.join(baseDir, "HTTPDATA.txt"), JSON.stringify(DataToWrite) + "\n", (err) => {
             if (err) throw err;
             console.log('The "data to append" was appended to file!');
           });
           res.sendStatus(200);
     });
 
-    app.post('/PostLoRaWANData', (req,res) =>{
-
+    app.post('/PostLoRaWANData', jsonParser, (req,res) =>{
+        var body = (req.body);
+        console.log(body);
+        console.log(Buffer.from(body.payload_raw, 'base64').toString())
+        console.log(body.counter)
+        var DataToWrite = {"Date": Date.now(), "Payloadsize": Buffer.from(body.payload_raw, 'base64').toString().length, "Number": body.counter};
+        console.log(DataToWrite)
+        fs.appendFile(path.join(baseDir, "LORAWANDATA.txt"), JSON.stringify(DataToWrite) + "\n", (err) => {
+            if (err) throw err;
+            console.log('The "data to append" was appended to file!');
+          });
+          res.sendStatus(200);
     });
 
     // Error handler
