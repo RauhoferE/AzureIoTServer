@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/RauhoferE/AzureIoTServer#readme",
   "dependencies": {
+    "applicationinsights": "^1.8.9",
     "cookie-parser": "^1.4.5",
     "express": "^4.17.1",
     "morgan": "^1.10.0"
