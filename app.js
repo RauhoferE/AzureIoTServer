@@ -56,7 +56,7 @@ const create = async () => {
         console.log(body);
         console.log(Buffer.from(body.payload_raw, 'base64').toString())
         console.log(body.counter)
-        var DataToWrite = {"Date": Date.now(), "Payloadsize": Buffer.from(body.payload_raw, 'base64').toString().length, "Number": body.counter};
+        var DataToWrite = {"Date": Date.now(), "Payload": Buffer.from(body.payload_raw, 'base64').toString(), "Number": body.counter};
         console.log(DataToWrite)
         fs.appendFile(path.join(baseDir, "LORAWANDATA.txt"), JSON.stringify(DataToWrite) + "\n", (err) => {
             if (err) throw err;
