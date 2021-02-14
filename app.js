@@ -48,7 +48,7 @@ const create = async () => {
             if (err) throw err;
             console.log('The "data to append" was appended to file!');
           });
-          res.sendStatus(200);
+          res.send('OK');
     });
 
     app.post('/PostLoRaWANData', jsonParser, (req,res) =>{
